@@ -1,2 +1,4 @@
 picamera==1.13
-numpy
+numpy==1.14.1
+pillow==5.0.0
+

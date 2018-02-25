@@ -4,8 +4,9 @@ import RPi.GPIO as GPIO
 
 
 # def __init__(self):
-GPIO.setmode(GPIO.BCM)
-#     GPIO.setup(36, GPIO.OUT)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(32, GPIO.OUT)
+GPIO.setup(36, GPIO.OUT)
 #     GPIO.setup(37, GPIO.OUT)
 #     GPIO.setup(38, GPIO.OUT)
 #     GPIO.setup(40, GPIO.OUT)
@@ -17,13 +18,14 @@ GPIO.setmode(GPIO.BCM)
 
 def start():
     print("STARTING")
-    GPIO.setup(32, GPIO.OUT)
-    arm = GPIO.PWM(32, 50)
+   # GPIO.setup(32, GPIO.OUT)
+    arm = GPIO.PWM(32, 2000)
     arm.start(0)
     for dc in range(0, 101, 5):
         arm.ChangeDutyCycle(dc)
         time.sleep(0.1)
     arm.stop()
+    #GPIO.cleanup()
 
 def stop():
     print("STOPPING")
@@ -33,24 +35,29 @@ def stop():
     arm.stop()
         
 def lift_off():
+    #GPIO.setmode(GPIO.BOARD)
+
     print("LIFTING OFF")
-    self.throttle.start(0)
+    #GPIO.setup(36, GPIO.OUT)
+    throttle = GPIO.PWM(36, 500);
+    throttle.start(50)
     for dc in range(0, 101, 5):
-        self.throttle.ChangeDutyCycle(dc)
+        throttle.ChangeDutyCycle(dc)
         time.sleep(0.1)
     time.sleep(2)
     for dc in range(100, -1, -5):
-        self.throttle.ChangeDutyCycle(dc)
+        throttle.ChangeDutyCycle(dc)
         time.sleep(0.1)
 
 def move_forward():
     print("MOVING FORWARD")
-    self.pitch.start(0)
+   # GPIO.setup(37, GPIO.OUT)
+    pitch = GPIO.PWM(37, 50)
     for dc in range(0, 26, 5):
-        self.pitch.ChangeDutyCycle(dc)
+        pitch.ChangeDutyCycle(dc)
     time.sleep(5)
     for dc in range(25, -1, -5):
-        self.pitch.ChangeDutyCycle(dc)
+        pitch.ChangeDutyCycle(dc)
 
 def rotate_90_left():
     print("ROTATING 90 LEFT")
@@ -61,3 +68,4 @@ def rotate_90_right():
     print("ROTATINg 90 RIGHT")
 
 start()
+lift_off()
