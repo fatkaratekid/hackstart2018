@@ -6,4 +6,4 @@ if __name__ == "__main__":
     drone.start()
     drone.lift_off()
     drone.move_forward()
-    drone.stop()
+  #  drone.stop()
